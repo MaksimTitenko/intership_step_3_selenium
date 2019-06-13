@@ -1,6 +1,11 @@
 import unittest
 
+from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
+from selenium.webdriver.support.wait import WebDriverWait
+
+#TODO: Need path TO YOU geckodriver, for example it's my path.
+PATH_TO_FIREFOX_WEBDRIVER = '/home/maksim/Internship/intership_step_3_selenium/geckodriver'
 
 
 class TestAbstract(unittest.TestCase):
@@ -8,17 +13,15 @@ class TestAbstract(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        '''Need path TO YOU geckodriver, it's my path.'''
-        cls.driver = webdriver.Firefox(executable_path='/home/maksim/Internship/intership_step_3_selenium/geckodriver')
+
+        cls.driver = webdriver.Firefox(executable_path=PATH_TO_FIREFOX_WEBDRIVER)
+
 
 class TestAbstractWithLogin(unittest.TestCase):
     driver = None
-
     @classmethod
     def setUpClass(cls) -> None:
-        '''Need path TO YOU geckodriver, it's my path.'''
-        profile = webdriver.FirefoxProfile()
-        cls.driver = webdriver.Firefox(executable_path='/home/maksim/Internship/intership_step_3_selenium/geckodriver')
+        cls.driver = webdriver.Firefox(executable_path=PATH_TO_FIREFOX_WEBDRIVER)
         cls.driver.get("http://185.183.122.133/")
         login = cls.driver.find_element_by_id('id_username')
         login.clear()
@@ -28,3 +31,9 @@ class TestAbstractWithLogin(unittest.TestCase):
         pswd.submit()
 
 
+class TestAbstractWithAuthorizationPatient(TestAbstractWithLogin):
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+        WebDriverWait(cls.driver, 10).until(EC.url_to_be("http://185.183.122.133/patient/"))
