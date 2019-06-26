@@ -1,14 +1,15 @@
 import unittest
+from abc import ABCMeta
 
 from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 
 #TODO: Need path TO YOU geckodriver, for example it's my path.
-PATH_TO_FIREFOX_WEBDRIVER = '/home/maksim/Internship/intership_step_3_selenium/geckodriver'
+PATH_TO_FIREFOX_WEBDRIVER = '/home/ubunu/intership_step_3_selenium/geckodriver'
 
 
-class TestAbstract(unittest.TestCase):
+class TestAbstract(unittest.TestCase, metaclass=ABCMeta):
     driver = None
 
     @classmethod
@@ -17,7 +18,7 @@ class TestAbstract(unittest.TestCase):
         cls.driver = webdriver.Firefox(executable_path=PATH_TO_FIREFOX_WEBDRIVER)
 
 
-class TestAbstractWithLogin(unittest.TestCase):
+class TestAbstractWithLogin(unittest.TestCase, metaclass=ABCMeta):
     driver = None
     @classmethod
     def setUpClass(cls) -> None:
@@ -31,7 +32,7 @@ class TestAbstractWithLogin(unittest.TestCase):
         pswd.submit()
 
 
-class TestAbstractWithAuthorizationPatient(TestAbstractWithLogin):
+class TestAbstractWithAuthorizationPatient(TestAbstractWithLogin, metaclass=ABCMeta):
 
     @classmethod
     def setUpClass(cls) -> None:
